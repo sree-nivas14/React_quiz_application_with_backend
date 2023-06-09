@@ -18,18 +18,21 @@ import helpers from "../Services/Helper";
 function Basic_table({ questions }) {
   // console.log(questions);
   function delete_questions() {
-    document.getElementById("fp-container").style.visibility = "visible";
-    helpers
-      .delete_questions()
-      .then((response) => {
-        document.getElementById("fp-container").style.visibility = "hidden";
-        toast(response.data, { type: "success" });
-        window.location.reload(false);
-      })
-      .catch(function (error) {
-        document.getElementById("fp-container").style.visibility = "hidden";
-        alert(error.response.data.message);
-      });
+    let text = "Are u sure want to delete all the data?";
+    if (window.confirm(text) == true) {
+      document.getElementById("fp-container").style.visibility = "visible";
+      helpers
+        .delete_questions()
+        .then((response) => {
+          document.getElementById("fp-container").style.visibility = "hidden";
+          toast(response.data, { type: "success" });
+          window.location.reload(false);
+        })
+        .catch(function (error) {
+          document.getElementById("fp-container").style.visibility = "hidden";
+          alert(error.response.data.message);
+        });
+    }
   }
 
   function export_questions() {

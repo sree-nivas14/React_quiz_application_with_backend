@@ -24,7 +24,10 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Sign_in />} />
-          <Route path="/React_application_with_backend" element={<Sign_in />} />
+          <Route
+            path="/React_quiz_application_with_backend"
+            element={<Sign_in />}
+          />
           <Route element={<ProtectedRoutes />}>
             <Route path="/data_table" element={<Basic_table />} />
             <Route path="/admin" element={<Admin_page />} />

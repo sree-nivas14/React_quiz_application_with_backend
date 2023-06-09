@@ -133,7 +133,7 @@ function Sign_in() {
       .email("Invalid email format"),
     password: Yup.string()
       .required("Password is a required field")
-      .min(4, "Must be at least 8 characters"),
+      .min(4, "Must be at least 4 characters"),
   });
 
   return (

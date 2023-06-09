@@ -2,7 +2,7 @@
   "name": "react_quiz_app",
   "version": "0.1.0",
   "proxy": "https://llklk.cu.ma",
-  "homepage": "https://github.com/React_application_with_backend",
+  "homepage": "https://github.com/React_quiz_application_with_backend",
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.12.4",

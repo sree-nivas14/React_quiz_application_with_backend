@@ -132,29 +132,46 @@ function Admin_page() {
     }
   }
 
-  function search_Result() {
-    if (email) {
-      document.getElementById("fp-container").style.visibility = "visible";
-      var formData = new FormData();
-      formData.append("name", email);
-      helpers
-        .get_final_result(formData)
-        .then((response) => {
-          document.getElementById("fp-container").style.visibility = "hidden";
-          setresult(response.data);
-        })
-        .catch(function (error) {
-          document.getElementById("fp-container").style.visibility = "hidden";
+  useEffect(() => {
+    document.getElementById("fp-container").style.visibility = "visible";
+    var formData = new FormData();
+    formData.append("name", email);
+    helpers
+      .get_final_result(formData)
+      .then((response) => {
+        document.getElementById("fp-container").style.visibility = "hidden";
+        setresult(response.data);
+      })
+      .catch(function (error) {
+        document.getElementById("fp-container").style.visibility = "hidden";
 
-          alert(error.response.data.message);
-        });
-    } else {
-      console.log(document.getElementById("fp-container"));
-      document.getElementById("fp-container").style.visibility = "visible";
+        alert(error.response.data.message);
+      });
+  }, []);
 
-      toast("Pls fill the mandatory fields", { type: "error" });
-    }
-  }
+  // function search_Result() {
+  //   if (email) {
+  //     document.getElementById("fp-container").style.visibility = "visible";
+  //     var formData = new FormData();
+  //     formData.append("name", email);
+  //     helpers
+  //       .get_final_result(formData)
+  //       .then((response) => {
+  //         document.getElementById("fp-container").style.visibility = "hidden";
+  //         setresult(response.data);
+  //       })
+  //       .catch(function (error) {
+  //         document.getElementById("fp-container").style.visibility = "hidden";
+
+  //         alert(error.response.data.message);
+  //       });
+  //   } else {
+  //     console.log(document.getElementById("fp-container"));
+  //     document.getElementById("fp-container").style.visibility = "visible";
+
+  //     toast("Pls fill the mandatory fields", { type: "error" });
+  //   }
+  // }
 
   function format_download() {
     document.getElementById("fp-container").style.visibility = "visible";
@@ -293,6 +310,7 @@ function Admin_page() {
                   title="Bulk Upload Format"
                   data-bs-toggle="tooltip"
                   data-bs-placement="bottom"
+                  style={{ cursor: "pointer" }}
                   onClick={format_download}
                 ></i>
                 {/* </a> */}
@@ -360,9 +378,9 @@ function Admin_page() {
               User Results
             </h1>
             <div className="container">
-              <div className="row bg-white px-2 py-5 m-3 rounded ">
+              {/* <div className="row bg-white px-2 py-5 m-3 rounded ">
                 <div className="col-md-4 align-items-center">
-                  {/* <label className="control-label">Email *</label> */}
+                  {/* <label className="control-label">Email *</label> }
                   Email <span className="text-danger">*</span>
                   <input
                     type="text"
@@ -376,12 +394,12 @@ function Admin_page() {
                   <button
                     className="btn btn-primary mt-4"
                     type="submit"
-                    onClick={search_Result}
+                    // onClick={search_Result}
                   >
                     Search
                   </button>
                 </div>
-              </div>
+              </div> */}
               <div className="bg-white p-2 m-3 rounded">
                 <Result_table questions={result} />
               </div>
