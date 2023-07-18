@@ -301,23 +301,23 @@ function Result_table({ questions }) {
 
     var tot_question_length =
       parseInt(
-        JSON.parse(row.original.section1).questions != "-"
-          ? JSON.parse(row.original.section1).questions.split("/").pop()
+        JSON.parse(row.original.section1).total_question != ""
+          ? JSON.parse(row.original.section1).total_question
           : 0
       ) +
       parseInt(
-        JSON.parse(row.original.section2).questions != "-"
-          ? JSON.parse(row.original.section2).questions.split("/").pop()
+        JSON.parse(row.original.section2).total_question != ""
+          ? JSON.parse(row.original.section2).total_question
           : 0
       ) +
       parseInt(
-        JSON.parse(row.original.section3).questions != "-"
-          ? JSON.parse(row.original.section3).questions.split("/").pop()
+        JSON.parse(row.original.section3).total_question != ""
+          ? JSON.parse(row.original.section3).total_question
           : 0
       ) +
       parseInt(
-        JSON.parse(row.original.section4).questions != "-"
-          ? JSON.parse(row.original.section4).questions.split("/").pop()
+        JSON.parse(row.original.section4).total_question != ""
+          ? JSON.parse(row.original.section4).total_question
           : 0
       );
     console.log(data);
@@ -414,7 +414,9 @@ function Result_table({ questions }) {
 
                     <div id="right">
                       <div id="object3">{grand_total}</div>
-                      <div id="object4">{tot_question_length}</div>
+                      <div id="object4">
+                        {isNaN(tot_question_length) ? "-" : tot_question_length}
+                      </div>
                       <div id="object4">{hh + ":" + mm + ":" + ss}</div>
                       <div id="object4">
                         {moment(data.created_at).format("DD-MM-YYYY")}
