@@ -54,7 +54,7 @@ function Timeline() {
     //     },
     //   })
     helpers
-      .logout(state.score_id)
+      .logout(state.score_id, state.question_count)
       .then((response) => {
         // toast(response.data, { type: "error" });
         navigate("/logout", { state: sum });

@@ -145,30 +145,33 @@ function Result_table({ questions }) {
 
         var tot_question_length =
           parseInt(
-            JSON.parse(row.original.section1).questions != "-"
-              ? JSON.parse(row.original.section1).questions.split("/").pop()
+            JSON.parse(row.original.section1).total_question != ""
+              ? JSON.parse(row.original.section1).total_question
               : 0
           ) +
           parseInt(
-            JSON.parse(row.original.section2).questions != "-"
-              ? JSON.parse(row.original.section2).questions.split("/").pop()
+            JSON.parse(row.original.section2).total_question != ""
+              ? JSON.parse(row.original.section2).total_question
               : 0
           ) +
           parseInt(
-            JSON.parse(row.original.section3).questions != "-"
-              ? JSON.parse(row.original.section3).questions.split("/").pop()
+            JSON.parse(row.original.section3).total_question != ""
+              ? JSON.parse(row.original.section3).total_question
               : 0
           ) +
           parseInt(
-            JSON.parse(row.original.section4).questions != "-"
-              ? JSON.parse(row.original.section4).questions.split("/").pop()
+            JSON.parse(row.original.section4).total_question != ""
+              ? JSON.parse(row.original.section4).total_question
               : 0
           );
 
         return (
           <div>
             <div>Total Score : {grand_total}</div>
-            <div>Total Questions : {tot_question_length}</div>
+            <div>
+              Total Questions :{" "}
+              {isNaN(tot_question_length) ? "-" : tot_question_length}
+            </div>
             <div class="text-nowrap">
               Time duration : {hh + ":" + mm + ":" + ss}
             </div>

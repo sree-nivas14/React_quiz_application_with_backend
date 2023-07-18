@@ -190,6 +190,7 @@ function Quiz_answer({ score, handle, question_count, score_id }) {
         score: crt_answers,
         questions: selectedAnswers.length + "/" + question_len,
         question_length: question_len,
+        total_question: question_count,
         processed_answers: processedAnswers,
       },
     };

@@ -39,9 +39,9 @@ const helpers = {
     });
   },
 
-  logout: function (value) {
-    console.log("value:", value);
-    return axios.get(API_URL + `logout/${value}`, {
+  logout: function (value, question_count) {
+    console.log("value:", value, question_count);
+    return axios.get(API_URL + `logout/${value}/${question_count}`, {
       headers: {
         Authorization: `Bearer ${sessionStorage.getItem("token")}`,
       },
