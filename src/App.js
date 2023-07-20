@@ -5,7 +5,13 @@ import "./App.css";
 import Sign_in from "./components/Sign_in";
 import Timeline from "./components/Timeline";
 import Logout from "./components/Logout";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import {
+  BrowserRouter,
+  HashRouter,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 import ProtectedRoutes from "./components/ProtectedRoutes";
 import Page_not_found from "./components/Page_not_found";
 import Admin_page from "./components/admin_page/Admin_page";
@@ -21,7 +27,9 @@ function App() {
   // }, []);
   return (
     <div className="App">
-      <BrowserRouter>
+      {/* <BrowserRouter> */}
+      {/*Page refresh issue got fixed with help of hashRouter instead of browserRouter */}
+      <HashRouter>
         <Routes>
           <Route path="/" element={<Sign_in />} />
           <Route
@@ -36,7 +44,8 @@ function App() {
           </Route>
           <Route path="*" element={<Page_not_found />} />
         </Routes>
-      </BrowserRouter>
+      </HashRouter>
+      {/* </BrowserRouter> */}
     </div>
   );
 }
