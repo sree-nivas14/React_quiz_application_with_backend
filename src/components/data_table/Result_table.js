@@ -165,6 +165,11 @@ function Result_table({ questions }) {
               : 0
           );
 
+        var tot_time =
+          JSON.parse(row.original.section1).timer != ""
+            ? JSON.parse(row.original.section1).timer
+            : "-";
+
         return (
           <div>
             <div>Total Score : {grand_total}</div>
@@ -173,10 +178,14 @@ function Result_table({ questions }) {
               {isNaN(tot_question_length) ? "-" : tot_question_length}
             </div>
             <div class="text-nowrap">
-              Time duration : {hh + ":" + mm + ":" + ss}
+              Time duration : {hh + ":" + mm + ":" + ss}/{tot_time}min
             </div>
             <div class="text-nowrap">
-              Date : {moment(row.original.created_at).format("DD-MM-YYYY")}
+              Date : {moment(row.original.created_at).format("DD-MM-YYYY")}(
+              {moment(row.original.created_at).format("ddd")})
+            </div>
+            <div class="text-nowrap">
+              Time : {moment(row.original.created_at).format("LTS")}
             </div>
             <div>
               {row.original.google_id ? (
@@ -320,7 +329,11 @@ function Result_table({ questions }) {
           ? JSON.parse(row.original.section4).total_question
           : 0
       );
-    console.log(data);
+
+    var tot_time =
+      JSON.parse(row.original.section1).timer != ""
+        ? JSON.parse(row.original.section1).timer
+        : "-";
     return (
       <div className="row justify-content-start">
         <div className="col-3 col-sm-4 col-md-6  col-xs-3">
@@ -405,6 +418,7 @@ function Result_table({ questions }) {
                       <div id="object2">Questions</div>
                       <div id="object2">Duration</div>
                       <div id="object2">Date</div>
+                      <div id="object2">Time</div>
                       {row.original.google_id ? (
                         <div id="object2">Login type :</div>
                       ) : (
@@ -417,9 +431,15 @@ function Result_table({ questions }) {
                       <div id="object4">
                         {isNaN(tot_question_length) ? "-" : tot_question_length}
                       </div>
-                      <div id="object4">{hh + ":" + mm + ":" + ss}</div>
                       <div id="object4">
-                        {moment(data.created_at).format("DD-MM-YYYY")}
+                        {hh + ":" + mm + ":" + ss}/{tot_time}min
+                      </div>
+                      <div id="object4">
+                        {moment(data.created_at).format("DD-MM-YYYY")}(
+                        {moment(row.original.created_at).format("ddd")})
+                      </div>
+                      <div id="object4">
+                        {moment(row.original.created_at).format("LTS")}
                       </div>
                       {row.original.google_id ? (
                         <div id="object4">

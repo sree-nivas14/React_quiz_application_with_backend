@@ -54,7 +54,7 @@ function Timeline() {
     //     },
     //   })
     helpers
-      .logout(state.score_id, state.question_count)
+      .logout(state.score_id, state.question_count, state.timer)
       .then((response) => {
         // toast(response.data, { type: "error" });
         navigate("/logout", { state: sum });
@@ -293,7 +293,7 @@ function Timeline() {
             </div>
             <div className="logout">
               <button
-                className="px-2 py-2 rounded-circle  shadow"
+                className="px-2 py-1 rounded-circle  shadow"
                 data-bs-toggle="tooltip"
                 data-bs-placement="top"
                 title="Logout"
@@ -334,6 +334,7 @@ function Timeline() {
                 handle={handle}
                 question_count={state.question_count}
                 score_id={state.score_id}
+                timer={state.timer}
               />
               <div className="d-flex justify-content-center my-1">
                 <button
@@ -361,6 +362,7 @@ function Timeline() {
                 handle={handle}
                 question_count={state.question_count}
                 score_id={state.score_id}
+                timer={state.timer}
               />
               <div className="d-flex justify-content-center my-1">
                 <button
@@ -389,6 +391,7 @@ function Timeline() {
                 handle={handle}
                 question_count={state.question_count}
                 score_id={state.score_id}
+                timer={state.timer}
               />
               <div className="d-flex justify-content-center my-1">
                 <button
@@ -417,6 +420,7 @@ function Timeline() {
                 handle={handle}
                 question_count={state.question_count}
                 score_id={state.score_id}
+                timer={state.timer}
               />
               <div className="d-flex justify-content-center my-1">
                 <button

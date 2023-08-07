@@ -5,7 +5,7 @@ import "./Quiz_answer.css";
 import $ from "jquery";
 import pic from "./crying_emoji-removebg-preview.png";
 
-function Quiz_answer({ score, handle, question_count, score_id }) {
+function Quiz_answer({ score, handle, question_count, score_id, timer }) {
   const [selectedAnswers, setSelectedAnswers] = useState([]);
   const [showAnswers, setShowAnswers] = useState([]);
   const [processedAnswers, setProcessedAnswers] = useState([]);
@@ -191,6 +191,7 @@ function Quiz_answer({ score, handle, question_count, score_id }) {
         questions: selectedAnswers.length + "/" + question_len,
         question_length: question_len,
         total_question: question_count,
+        timer: timer,
         processed_answers: processedAnswers,
       },
     };
