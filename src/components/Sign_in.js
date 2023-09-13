@@ -412,7 +412,13 @@ function Sign_in() {
                   <div class="or-label">or</div>
                   <div class="line-separator"></div>
                 </div>
-                <div className="button text-center">
+                <div
+                  className="button text-center"
+                  onClick={() => {
+                    document.getElementById("fp-container").style.visibility =
+                      "visible";
+                  }}
+                >
                   <LoginSocialGoogle
                     client_id={
                       "349026888305-868mtsb0epjci5ligen43m9l5jaccjh5.apps.googleusercontent.com"
@@ -421,9 +427,6 @@ function Sign_in() {
                     discoveryDocs="claims_supported"
                     access_type="offline"
                     onResolve={async ({ provider, data }) => {
-                      document.getElementById("fp-container").style.visibility =
-                        "visible";
-
                       // console.log(provider, data);
                       var is_chk = await model_submit();
                       let question_count =
