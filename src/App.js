@@ -27,9 +27,9 @@ function App() {
   // }, []);
   return (
     <div className="App">
-      {/* <BrowserRouter> */}
-      {/*Page refresh issue got fixed with help of hashRouter instead of browserRouter */}
-      <HashRouter>
+      <BrowserRouter>
+        {/*Page refresh issue got fixed with help of hashRouter instead of browserRouter */}
+        {/* <HashRouter> */}
         <Routes>
           <Route path="/" element={<Sign_in />} />
           <Route
@@ -44,8 +44,8 @@ function App() {
           </Route>
           <Route path="*" element={<Page_not_found />} />
         </Routes>
-      </HashRouter>
-      {/* </BrowserRouter> */}
+        {/* </HashRouter> */}
+      </BrowserRouter>
     </div>
   );
 }
