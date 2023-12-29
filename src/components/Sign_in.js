@@ -313,6 +313,8 @@ function Sign_in() {
                     }
                   })
                   .catch(function (error) {
+                    document.getElementById("fp-container").style.visibility =
+                      "hidden";
                     alert(error.message);
                   });
                 // navigate("/logout");

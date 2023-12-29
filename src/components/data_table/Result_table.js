@@ -13,6 +13,7 @@ import "./Basic_table.css";
 import GlobalFilter from "./GlobalFilter";
 import ColumnFilter from "./ColumnFilter";
 import moment from "moment";
+import $ from "jquery";
 
 function Result_table({ questions }) {
   const result_header = [
@@ -53,8 +54,11 @@ function Result_table({ questions }) {
       Filter: ColumnFilter,
 
       Cell: ({ row }) => {
-        // console.log(typeof JSON.parse(row.original.section1));
-        var obj_data = JSON.parse(row.original.section1);
+        // console.log(JSON.parse(row.original.section1));
+        var obj_data =
+          JSON.parse(row.original.section1) != null
+            ? JSON.parse(row.original.section1)
+            : "";
         return (
           <div>
             <span>Score : {obj_data.score}</span>
@@ -72,7 +76,10 @@ function Result_table({ questions }) {
       Filter: ColumnFilter,
       Cell: ({ row }) => {
         // console.log(typeof JSON.parse(row.original.section1));
-        var obj_data = JSON.parse(row.original.section2);
+        var obj_data =
+          JSON.parse(row.original.section2) != null
+            ? JSON.parse(row.original.section2)
+            : "";
         return (
           <div>
             <span>Score : {obj_data.score}</span>
@@ -90,7 +97,10 @@ function Result_table({ questions }) {
       Filter: ColumnFilter,
       Cell: ({ row }) => {
         // console.log(typeof JSON.parse(row.original.section1));
-        var obj_data = JSON.parse(row.original.section3);
+        var obj_data =
+          JSON.parse(row.original.section3) != null
+            ? JSON.parse(row.original.section3)
+            : "";
         return (
           <div>
             <span>Score : {obj_data.score}</span>
@@ -108,7 +118,10 @@ function Result_table({ questions }) {
       Filter: ColumnFilter,
       Cell: ({ row }) => {
         // console.log(typeof JSON.parse(row.original.section1));
-        var obj_data = JSON.parse(row.original.section4);
+        var obj_data =
+          JSON.parse(row.original.section4) != null
+            ? JSON.parse(row.original.section4)
+            : "";
         return (
           <div>
             <span>Score : {obj_data.score}</span>
@@ -130,44 +143,72 @@ function Result_table({ questions }) {
         var diff = date2.getTime() - date1.getTime();
 
         var msec = diff;
-        var hh = Math.floor(msec / 1000 / 60 / 60);
+        var hh = row.original.logout_time
+          ? Math.floor(msec / 1000 / 60 / 60)
+          : "-";
         msec -= hh * 1000 * 60 * 60;
-        var mm = Math.floor(msec / 1000 / 60);
+        var mm = row.original.logout_time ? Math.floor(msec / 1000 / 60) : "-";
         msec -= mm * 1000 * 60;
-        var ss = Math.floor(msec / 1000);
+        var ss = row.original.logout_time ? Math.floor(msec / 1000) : "-";
         msec -= ss * 1000;
 
         var grand_total =
-          JSON.parse(row.original.section1).score +
-          JSON.parse(row.original.section2).score +
-          JSON.parse(row.original.section3).score +
-          JSON.parse(row.original.section4).score;
+          parseInt(
+            JSON.parse(row.original.section1) != null
+              ? JSON.parse(row.original.section1).score
+              : 0
+          ) +
+          parseInt(
+            JSON.parse(row.original.section2) != null
+              ? JSON.parse(row.original.section2).score
+              : 0
+          ) +
+          parseInt(
+            JSON.parse(row.original.section3) != null
+              ? JSON.parse(row.original.section3).score
+              : 0
+          ) +
+          parseInt(
+            JSON.parse(row.original.section4) != null
+              ? JSON.parse(row.original.section4).score
+              : 0
+          );
 
         var tot_question_length =
           parseInt(
-            JSON.parse(row.original.section1).total_question != ""
-              ? JSON.parse(row.original.section1).total_question
+            JSON.parse(row.original.section1) != null
+              ? JSON.parse(row.original.section1).total_question != ""
+                ? JSON.parse(row.original.section1).total_question
+                : 0
               : 0
           ) +
           parseInt(
-            JSON.parse(row.original.section2).total_question != ""
-              ? JSON.parse(row.original.section2).total_question
+            JSON.parse(row.original.section2) != null
+              ? JSON.parse(row.original.section2).total_question != ""
+                ? JSON.parse(row.original.section2).total_question
+                : 0
               : 0
           ) +
           parseInt(
-            JSON.parse(row.original.section3).total_question != ""
-              ? JSON.parse(row.original.section3).total_question
+            JSON.parse(row.original.section3) != null
+              ? JSON.parse(row.original.section3).total_question != ""
+                ? JSON.parse(row.original.section3).total_question
+                : 0
               : 0
           ) +
           parseInt(
-            JSON.parse(row.original.section4).total_question != ""
-              ? JSON.parse(row.original.section4).total_question
+            JSON.parse(row.original.section4) != null
+              ? JSON.parse(row.original.section4).total_question != ""
+                ? JSON.parse(row.original.section4).total_question
+                : 0
               : 0
           );
 
         var tot_time =
-          JSON.parse(row.original.section1).timer != ""
-            ? JSON.parse(row.original.section1).timer
+          JSON.parse(row.original.section1) != null
+            ? JSON.parse(row.original.section1).timer != ""
+              ? JSON.parse(row.original.section1).timer
+              : "-"
             : "-";
 
         return (
@@ -211,19 +252,51 @@ function Result_table({ questions }) {
       Header: "Action",
       disableGlobalFilter: true,
 
-      Cell: ({ row }) => (
-        <button
-          type="button"
-          class="btn btn-primary"
-          data-bs-toggle="modal"
-          data-bs-target="#exampleModal"
-          onClick={() => {
-            handleShow(row);
-          }}
-        >
-          Show Answers
-        </button>
-      ),
+      Cell: ({ row }) => {
+        // console.log(JSON.parse(row.original.section1));
+        // return false;
+        var sec1 = JSON.parse(row.original.section1);
+        var sec2 = JSON.parse(row.original.section2);
+        var sec3 = JSON.parse(row.original.section3);
+        var sec4 = JSON.parse(row.original.section4);
+        var tmp = 0;
+        if (sec1 == null && sec2 == null && sec3 == null && sec4 == null) {
+          tmp++;
+        } else if (
+          sec1 != null
+            ? sec1.questions == "-"
+            : "" && sec2 != null
+            ? sec2.questions == "-"
+            : "" && sec3 != null
+            ? sec3.questions == "-"
+            : "" && sec4 != null
+            ? sec4.questions == "-"
+            : ""
+        ) {
+          tmp++;
+        }
+        return (
+          <>
+            {tmp == 0 ? (
+              <button
+                type="button"
+                class="btn btn-primary"
+                data-bs-toggle="modal"
+                data-bs-target="#exampleModal"
+                onClick={() => {
+                  handleShow(row);
+                }}
+              >
+                Show Answers
+              </button>
+            ) : (
+              <button type="button" class="btn btn-primary" disabled>
+                Show Answers
+              </button>
+            )}
+          </>
+        );
+      },
     },
   ];
 
@@ -284,10 +357,22 @@ function Result_table({ questions }) {
 
   const renderRowSubComponent = (row) => {
     var data = row.original;
-    var obj_data1 = JSON.parse(row.original.section1);
-    var obj_data2 = JSON.parse(row.original.section2);
-    var obj_data3 = JSON.parse(row.original.section3);
-    var obj_data4 = JSON.parse(row.original.section4);
+    var obj_data1 =
+      JSON.parse(row.original.section1) != null
+        ? JSON.parse(row.original.section1)
+        : "";
+    var obj_data2 =
+      JSON.parse(row.original.section2) != null
+        ? JSON.parse(row.original.section2)
+        : "";
+    var obj_data3 =
+      JSON.parse(row.original.section3) != null
+        ? JSON.parse(row.original.section3)
+        : "";
+    var obj_data4 =
+      JSON.parse(row.original.section4) != null
+        ? JSON.parse(row.original.section4)
+        : "";
 
     var date1 = new Date(row.original.login_time);
     var date2 = new Date(row.original.logout_time);
@@ -295,45 +380,92 @@ function Result_table({ questions }) {
     var diff = date2.getTime() - date1.getTime();
 
     var msec = diff;
-    var hh = Math.floor(msec / 1000 / 60 / 60);
+    var hh = row.original.logout_time ? Math.floor(msec / 1000 / 60 / 60) : "-";
     msec -= hh * 1000 * 60 * 60;
-    var mm = Math.floor(msec / 1000 / 60);
+    var mm = row.original.logout_time ? Math.floor(msec / 1000 / 60) : "-";
     msec -= mm * 1000 * 60;
-    var ss = Math.floor(msec / 1000);
+    var ss = row.original.logout_time ? Math.floor(msec / 1000) : "-";
     msec -= ss * 1000;
 
     var grand_total =
-      JSON.parse(row.original.section1).score +
-      JSON.parse(row.original.section2).score +
-      JSON.parse(row.original.section3).score +
-      JSON.parse(row.original.section4).score;
+      parseInt(
+        JSON.parse(row.original.section1) != null
+          ? JSON.parse(row.original.section1).score
+          : 0
+      ) +
+      parseInt(
+        JSON.parse(row.original.section2) != null
+          ? JSON.parse(row.original.section2).score
+          : 0
+      ) +
+      parseInt(
+        JSON.parse(row.original.section3) != null
+          ? JSON.parse(row.original.section3).score
+          : 0
+      ) +
+      parseInt(
+        JSON.parse(row.original.section4) != null
+          ? JSON.parse(row.original.section4).score
+          : 0
+      );
 
     var tot_question_length =
       parseInt(
-        JSON.parse(row.original.section1).total_question != ""
-          ? JSON.parse(row.original.section1).total_question
+        JSON.parse(row.original.section1) != null
+          ? JSON.parse(row.original.section1).total_question != ""
+            ? JSON.parse(row.original.section1).total_question
+            : 0
           : 0
       ) +
       parseInt(
-        JSON.parse(row.original.section2).total_question != ""
-          ? JSON.parse(row.original.section2).total_question
+        JSON.parse(row.original.section2) != null
+          ? JSON.parse(row.original.section2).total_question != ""
+            ? JSON.parse(row.original.section2).total_question
+            : 0
           : 0
       ) +
       parseInt(
-        JSON.parse(row.original.section3).total_question != ""
-          ? JSON.parse(row.original.section3).total_question
+        JSON.parse(row.original.section3) != null
+          ? JSON.parse(row.original.section3).total_question != ""
+            ? JSON.parse(row.original.section3).total_question
+            : 0
           : 0
       ) +
       parseInt(
-        JSON.parse(row.original.section4).total_question != ""
-          ? JSON.parse(row.original.section4).total_question
+        JSON.parse(row.original.section4) != null
+          ? JSON.parse(row.original.section4).total_question != ""
+            ? JSON.parse(row.original.section4).total_question
+            : 0
           : 0
       );
 
     var tot_time =
-      JSON.parse(row.original.section1).timer != ""
-        ? JSON.parse(row.original.section1).timer
+      JSON.parse(row.original.section1) != null
+        ? JSON.parse(row.original.section1).timer != ""
+          ? JSON.parse(row.original.section1).timer
+          : "-"
         : "-";
+
+    var sec1 = JSON.parse(row.original.section1);
+    var sec2 = JSON.parse(row.original.section2);
+    var sec3 = JSON.parse(row.original.section3);
+    var sec4 = JSON.parse(row.original.section4);
+    var tmp = 0;
+    if (sec1 == null && sec2 == null && sec3 == null && sec4 == null) {
+      tmp++;
+    } else if (
+      sec1 != null
+        ? sec1.questions == "-"
+        : "" && sec2 != null
+        ? sec2.questions == "-"
+        : "" && sec3 != null
+        ? sec3.questions == "-"
+        : "" && sec4 != null
+        ? sec4.questions == "-"
+        : ""
+    ) {
+      tmp++;
+    }
     return (
       <div className="row justify-content-start">
         <div className="col-3 col-sm-4 col-md-6  col-xs-3">
@@ -458,18 +590,23 @@ function Result_table({ questions }) {
                 </div>
                 <div class="py-1 bd-highlight  subcomponent_header">Action</div>
                 <div class="py-1 bd-highlight ">
-                  {" "}
-                  <button
-                    type="button"
-                    class="btn btn-primary"
-                    data-bs-toggle="modal"
-                    data-bs-target="#exampleModal"
-                    onClick={() => {
-                      handleShow(row);
-                    }}
-                  >
-                    Show Answers
-                  </button>
+                  {tmp == 0 ? (
+                    <button
+                      type="button"
+                      class="btn btn-primary"
+                      data-bs-toggle="modal"
+                      data-bs-target="#exampleModal"
+                      onClick={() => {
+                        handleShow(row);
+                      }}
+                    >
+                      Show Answers
+                    </button>
+                  ) : (
+                    <button type="button" class="btn btn-primary" disabled>
+                      Show Answers
+                    </button>
+                  )}
                 </div>
               </div>
             </div>
@@ -668,59 +805,44 @@ function Result_table({ questions }) {
                   {section.map((e) => {
                     return (
                       <>
-                        {JSON.parse(
-                          JSON.stringify(
-                            JSON.parse(JSON.parse(arr_value)[e]).questions
-                          )
-                        ) != "-" ? (
-                          <div className="mb-3 bg-color rounded">
-                            <h5 className="sections_tab p-2 rounded text-capitalize">
-                              {
-                                <div className="d-flex justify-content-start align-items-center">
-                                  <div>
-                                    {e.replace(/[^0-9](?=[0-9])/g, "$& ")}
-                                  </div>
+                        {JSON.parse(arr_value)[e] != null ? (
+                          JSON.parse(
+                            JSON.stringify(
+                              JSON.parse(JSON.parse(arr_value)[e]).questions
+                            )
+                          ) != "-" ? (
+                            <div className="mb-3 bg-color rounded">
+                              <h5 className="sections_tab p-2 rounded text-capitalize">
+                                {
+                                  <div className="d-flex justify-content-start align-items-center">
+                                    <div>
+                                      {e.replace(/[^0-9](?=[0-9])/g, "$& ")}
+                                    </div>
 
-                                  <div class="mx-3 badge rounded-pill bg-dark">
-                                    {JSON.parse(
-                                      JSON.stringify(
-                                        JSON.parse(JSON.parse(arr_value)[e])
-                                          .questions
-                                      )
-                                    )}
+                                    <div class="mx-3 badge rounded-pill bg-dark">
+                                      {JSON.parse(
+                                        JSON.stringify(
+                                          JSON.parse(JSON.parse(arr_value)[e])
+                                            .questions
+                                        )
+                                      )}
+                                    </div>
                                   </div>
-                                </div>
-                              }
-                            </h5>{" "}
-                            <div className="p-3">
-                              {JSON.parse(
-                                JSON.stringify(
-                                  JSON.parse(JSON.parse(arr_value)[e])
-                                    .processed_answers
-                                )
-                              ).map((e, index) => {
-                                return (
-                                  <div className="px-3 py-2">
-                                    <h6>
-                                      {index + 1}. {e.question}
-                                    </h6>
-                                    {e.isCorrect ? (
-                                      <button
-                                        type="button"
-                                        style={{ minWidth: "30%" }}
-                                        className="selected_options p-1 m-1 rounded"
-                                      >
-                                        {e.correctAnswer}
-                                      </button>
-                                    ) : (
-                                      <>
-                                        <button
-                                          type="button"
-                                          style={{ minWidth: "30%" }}
-                                          className="selected_options_danger p-1 m-1 rounded"
-                                        >
-                                          {e.wrongAnswer}
-                                        </button>
+                                }
+                              </h5>{" "}
+                              <div className="p-3">
+                                {JSON.parse(
+                                  JSON.stringify(
+                                    JSON.parse(JSON.parse(arr_value)[e])
+                                      .processed_answers
+                                  )
+                                ).map((e, index) => {
+                                  return (
+                                    <div className="px-3 py-2">
+                                      <h6>
+                                        {index + 1}. {e.question}
+                                      </h6>
+                                      {e.isCorrect ? (
                                         <button
                                           type="button"
                                           style={{ minWidth: "30%" }}
@@ -728,13 +850,32 @@ function Result_table({ questions }) {
                                         >
                                           {e.correctAnswer}
                                         </button>
-                                      </>
-                                    )}
-                                  </div>
-                                );
-                              })}
+                                      ) : (
+                                        <>
+                                          <button
+                                            type="button"
+                                            style={{ minWidth: "30%" }}
+                                            className="selected_options_danger p-1 m-1 rounded"
+                                          >
+                                            {e.wrongAnswer}
+                                          </button>
+                                          <button
+                                            type="button"
+                                            style={{ minWidth: "30%" }}
+                                            className="selected_options p-1 m-1 rounded"
+                                          >
+                                            {e.correctAnswer}
+                                          </button>
+                                        </>
+                                      )}
+                                    </div>
+                                  );
+                                })}
+                              </div>
                             </div>
-                          </div>
+                          ) : (
+                            ""
+                          )
                         ) : (
                           ""
                         )}
